@@ -15,89 +15,19 @@ vector<string> split(const string &);
 
 int toys(vector<int> w)
 {
-    std::sort(w.begin(), w.end(), less<int>());
-    int count = 0;
-    int temp = -1;
+    sort(w.begin(), w.end());
     
-    for (int i = 0; i < w.size(); ++i)
+    int count = 0;
+    int limit = INT_MIN;
+    
+    for (int weight : w)
     {
-        if (w[i] > temp)
+        if (weight > limit)
         {
-            temp = w[i] + 4;
             count++;
+            limit = weight + 4;
         }
     }
     
     return count;
 }
-
-int main()
-{
-    ofstream fout(getenv("OUTPUT_PATH"));
-
-    string n_temp;
-    getline(cin, n_temp);
-
-    int n = stoi(ltrim(rtrim(n_temp)));
-
-    string w_temp_temp;
-    getline(cin, w_temp_temp);
-
-    vector<string> w_temp = split(rtrim(w_temp_temp));
-
-    vector<int> w(n);
-
-    for (int i = 0; i < n; i++) {
-        int w_item = stoi(w_temp[i]);
-
-        w[i] = w_item;
-    }
-
-    int result = toys(w);
-
-    fout << result << "\n";
-
-    fout.close();
-
-    return 0;
-}
-
-string ltrim(const string &str) {
-    string s(str);
-
-    s.erase(
-        s.begin(),
-        find_if(s.begin(), s.end(), not1(ptr_fun<int, int>(isspace)))
-    );
-
-    return s;
-}
-
-string rtrim(const string &str) {
-    string s(str);
-
-    s.erase(
-        find_if(s.rbegin(), s.rend(), not1(ptr_fun<int, int>(isspace))).base(),
-        s.end()
-    );
-
-    return s;
-}
-
-vector<string> split(const string &str) {
-    vector<string> tokens;
-
-    string::size_type start = 0;
-    string::size_type end = 0;
-
-    while ((end = str.find(" ", start)) != string::npos) {
-        tokens.push_back(str.substr(start, end - start));
-
-        start = end + 1;
-    }
-
-    tokens.push_back(str.substr(start));
-
-    return tokens;
-}
-
