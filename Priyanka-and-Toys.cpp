@@ -31,3 +31,53 @@ int toys(vector<int> w)
     
     return count;
 }
+
+
+int main()
+{
+    ofstream fout(getenv("OUTPUT_PATH"));
+
+    string n_temp;
+    getline(cin, n_temp);
+
+    int n = stoi(ltrim(rtrim(n_temp)));
+
+    string w_temp_temp;
+    getline(cin, w_temp_temp);
+
+    vector<string> w_temp = split(rtrim(w_temp_temp));
+
+    vector<int> w(n);
+
+    for (int i = 0; i < n; i++) {
+        int w_item = stoi(w_temp[i]);
+
+        w[i] = w_item;
+    }
+
+    int result = toys(w);
+
+    fout << result << "\n";
+
+    fout.close();
+
+    return 0;
+}
+
+string ltrim(const string &str)
+{
+    string s(str);
+    s.erase(
+        s.begin(), find_if(s.begin(), s.end(), [](unsigned char ch) { return !isspace(ch); })
+    );
+    return s;
+}
+
+string rtrim(const string &str)
+{
+    string s(str);
+    s.erase(
+        find_if(s.rbegin(), s.rend(), [](unsigned char ch) { return !isspace(ch); }).base(), s.end()
+    );
+    return s;
+}
